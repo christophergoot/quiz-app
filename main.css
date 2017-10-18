@@ -1,9 +1,18 @@
+
 .box {
 	border-radius: 5px;
 	border: 1px solid black;
 	margin: 5px;
 	padding: 5px;
 }
+
+.container {
+	max-width: 600px;
+	margin: 0 auto;
+}
+
+
+/*
 
 .start-page {
 	display: none;
@@ -12,3 +21,9 @@
 .feedback-page {
 	display: none;
 }
+
+.final-page {
+	display: none;
+}
+
+*/

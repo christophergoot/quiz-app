@@ -5,20 +5,20 @@
 	<link rel="stylesheet" type="text/css" href="main.css">
 </head>
 <body>
+	<header>
+		<div class="container quiz-title">
+			<h1>Cycling in Oregon</h1>
+			<h2>A quiz about cycling laws in Oregon</h2>
+		</div>
+	</header>
 	<div class="box container">
-		<header>
-			<div class="box quiz-title">
-				<h1>Cycling in Oregon</h1>
-				<p>A quiz about cycling laws in Oregon</p>
-			</div>
-		</header>
 		<section class="box start-page">
 			<h2>Test Your Knowledge</h2>
 			<p>Whether you mainly drive, walk or ride around Oregon, understanding the law is important to ensure everyone's safety</p>
 			<p>Start thhe quiz now to see how much you know about bicycle laws in Oregon</p>
-			<button name="quiz-start" class="box">Start The Quiz</button>		
+			<button name="quiz-start" class="box button">Start The Quiz</button>		
 		</section>
-		<section class="box quiz-page js-quiz-page">
+		<section role="main" class="box quiz-page js-quiz-page">
 			<form>
 				<h2 class="question js-question">Under Oregon law, who must wear a bicycle helmet?</h2>
 				<div class="answer-option">
@@ -63,6 +63,11 @@
 			<h2>Correct!</h2>
 			<p>Additionally, it is against the law to carry a passenger under the age of 16 on your bicycle if the passenger is not wearing a helmet</p>
 			<p class="source"><a href="https://www.portlandoregon.gov/transportation/article/301187" target="_blank">source</a></span></p>
+		</section>
+		<section class="box final-page js-final">
+			<h2>Quiz Complete</h2>
+			<p>Thank you for taking the quiz. It turns out you have <span class="js-quiz-critique" font-style="italic">an amazing</span> knowledge of bicycle laws and safety in Oregon</p>
+			<button name="quiz-start" class="box button">Take The Quiz Again</button>
 		</section>
 	</div>
 </body>
