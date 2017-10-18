@@ -1,0 +1,14 @@
+.box {
+	border-radius: 5px;
+	border: 1px solid black;
+	margin: 5px;
+	padding: 5px;
+}
+
+.start-page {
+	display: none;
+}
+
+.feedback-page {
+	display: none;
+}
