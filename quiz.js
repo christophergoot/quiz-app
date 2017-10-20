@@ -1,7 +1,8 @@
+// 'use strict';
+
 let currentQuestionNumber = 1;
-let correctAnswerCount = 0;
-const quizLength = 10;
-const scoreCard = [];
+let quizLength = 5;
+let scoreCard = [];
 let quizList = [];
 const MasterQuizList = [
 { 'Question' : 'Under Oregon law, who must wear a bicycle helmet?', 'Correct Answer' : 'Anyone under the age of 16', 'Answers' : [ 'Anyone under the age of 16', 'Anyone under the age of 13', 'Any cyclist, regardless of age', 'Helmet use is strongly encouraged, but unregulated in Oregon'], 'Feedback' : 'Additionally, it is against the law to carry a passenger under the age of 16 on your bicycle if the passenger is not wearing a helmet.', 'Source' : 'https://www.portlandoregon.gov/transportation/article/301187' },
@@ -16,33 +17,6 @@ const MasterQuizList = [
 { 'Question' : 'A cyclist must signal a stop or turn while operating a bicycle', 'Correct Answer' : 'If they can safely do so', 'Answers' : [ 'If they can safely do so', 'If they are so inclined', 'Never', 'Only in a dense urban core'], 'Feedback' : 'Failure to signal for a bicycle turn is a Class D traffic violation since 1983', 'Source' : 'https://bikeportland.org/resources/bicyclelaws#814405' },
 { 'Question' : 'Unlawful passengers on bicycle', 'Correct Answer' : 'Occurs where there are more persons on the bicycle than the number for which it is designed or safely equipped', 'Answers' : [ 'Occurs where there are more persons on the bicycle than the number for which it is designed or safely equipped', 'Is not a real thing', 'Is only enforced at the circus', 'Only applies to riding on the handlebars'], 'Feedback' : 'A person operating an electric personal assistive mobility device is not subject to this section.', 'Source' : 'https://bikeportland.org/resources/bicyclelaws#814405' }
 ];
-// Keys in each Object
-	// 'Question'
-	// 'Correct Answer'
-	// 'Answers'
-	// 		[0,1,2,3]
-	// 'Feedback'
-	// 'Source'
-
-
-
-
-/*
-Game Plan
-we will be starting with start page
-listen for start button
-	hide start page
-For Each question:
-	render quiz page
-		get current question number
-		retrieve current question
-		shuffle current answers
-
-	show quiz page
-	listen for button click
-
-*/
-
 
 function getCorrectAnswer() {
 	let test = quizList[currentQuestionNumber-1]
@@ -50,12 +24,13 @@ function getCorrectAnswer() {
 	return(correct);
 }
 
-function testAlert(passedAlert) { alert(`you have been alerted to: ${passedAlert}`);}
-
-
 function showSection (section) {
 	$('section').not(section).addClass('hidden');
 	$(section).removeClass('hidden');
+}
+
+function add(a, b) {
+    return a + b;
 }
 
 function shuffle (array) {
@@ -69,112 +44,122 @@ function shuffle (array) {
   }
 }
 
-
-
-function shuffleCurrentAnswers() {
-// pull answers to
-}
-
-
-
 function createQuestionString(i) {
-	// let obj = MasterQuizList[i];
-	let question = MasterQuizList[i].Question;
-	let correctAnswer = MasterQuizList[i]['Correct Answer'];
-	const answers = MasterQuizList[i].Answers;
+	let question = quizList[i].Question;
+	let correctAnswer = quizList[i]['Correct Answer'];
+	let correctAnswerCount = scoreCard.reduce(add, 0);
+	let answers = quizList[i].Answers;
 	// const	string = '<form><h2 class="question js-question">' + question + '</h2><div class="answer-option"><label for="answer-a" class="answer-label js-answer-label">a)</label><button name="answer-a" class="box answer js-answer-a">' + answerA + '</button></div><div class="answer-option"><label for="answer-a" class="answer-label js-answer-label">b)</label><button name="answer-b" class="box answer js-answer-b">' + answerB + '</button></div><div class="answer-option"><label for="answer-a" class="answer-label js-answer-label">c)</label><button name="answer-c" class="box answer js-answer-c">' + answerC + '</button></div><div class="answer-option"><label for="answer-a" class="answer-label js-answer-label">d)</label><button name="answer-d" class="box answer js-answer-d">' + answerD + '</button></div></form><div class="progress js-progress"><h4>Question <span class="js-question-number">1</span> of <span class="js-total-questions">10</span></h4><h4><span class="js-correct-answers">0</span> out of <span class="js-given-answers">0</span> correct</h4></div>';
 	const	string = (`
-		<form><h2 class="question js-question">${question}</h2><div class="answer-option"><label for="answer-a" class="answer-label js-answer-label">a)</label><button value="${answers[0]}" class="box answer js-answer-a">${answers[0]}</button></div>
-		<div class="answer-option">
-			<label for="answer-b" class="answer-label js-answer-label">b)</label>
-			<button value="${answers[1]}" class="box answer js-answer-b">${answers[1]}</button></div>
-		<div class="answer-option">
-			<label for="answer-c" class="answer-label js-answer-label">c)</label>
-			<button class="box answer js-answer-c">${answers[2]}</button></div><div class="answer-option"><label for="answer-d" class="answer-label js-answer-label">d)</label><button class="box answer js-answer-d">${answers[3]}</button></div></form><div class="progress js-progress"><h4>Question <span class="js-question-number">${currentQuestionNumber}</span> of <span class="js-total-questions">${quizLength}</span></h4><h4><span class="js-correct-answers">${correctAnswerCount}</span> out of <span class="js-given-answers">${currentQuestionNumber-1}</span> correct</h4></div>`);
+		<form>
+			<h2 class="question js-question">${question}</h2>
+			<div class="answer-option">
+				<label for="answer-a" class="answer-label">a)</label>
+				<button id="answer-a" value="${answers[0]}" class="box answer">${answers[0]}</button></div>
+			<div class="answer-option">
+				<label for="answer-b" class="answer-label js-answer-label">b)</label>
+				<button id="answer-b" value="${answers[1]}" class="box answer">${answers[1]}</button></div>
+			<div class="answer-option">
+				<label for="answer-c" class="answer-label js-answer-label">c)</label>
+				<button id="answer-c" value="${answers[2]}" class="box answer">${answers[2]}</button></div>
+			<div class="answer-option">
+				<label for="answer-d" class="answer-label js-answer-label">d)</label>
+				<button id="answer-d" value="${answers[3]}" class="box answer">${answers[3]}</button></div>
+		</form>
+		<div class="progress js-progress">
+			<h4>Question <span class="js-question-number">${currentQuestionNumber}</span> of <span class="js-total-questions">${quizLength}</span></h4>
+			<h4><span class="js-correct-answers">${correctAnswerCount}</span> out of <span class="js-given-answers">${currentQuestionNumber-1}</span> correct</h4>
+		</div>`);
 	return (string);
+}
+
+function clearOldStyles() {
+	// clear the correct or incorrect from previous quiz Results
 }
 
 function renderQuizPage() {
+	clearOldStyles();
 	$('.js-quiz-section').html(createQuestionString(currentQuestionNumber-1))
-	console.log(`from renderQuizPage(), the correct answer is "${getCorrectAnswer()}"`);
 }
 
-function createFeedbackString(i) {
+function createFeedbackString(i, answerStatus) {
 	let obj = MasterQuizList[i];
-	let question = obj['Question'];
-	let correctAnswer = obj['Correct Answer'];
-	let feedback = obj['Feedback'];
-	let source = obj['Source'];
-	// changed based on answerStatus
+	let question = quizList[i]['Question'];
+	let correctAnswer = quizList[i]['Correct Answer'];
+	let feedback = quizList[i]['Feedback'];
+	let source = quizList[i]['Source'];
 	let textResponse = "Sorry, that's not correct";
-	let optCorrectResponse = `<p>${question}</p><div class="box button correct">${correctAnswer}</div> Is the right answer.`
+	if (answerStatus == 1) textResponse = "Correct!"
+	let buttonAction = '<button value="next" class="box button js-next-question">Next Question</button>'
+	if (scoreCard.length === quizLength) buttonAction = '<button value="final" class="box button js-final-button">See Results</button>'
+	let optCorrectResponse = `<p>${question}</p><div class="box button correct">${correctAnswer}</div>`
 	const string = (`
-<h2>${textResponse}</h2>
-<div class="answer-option">${optCorrectResponse}</div>
-<p>${feedback}</p>
-<p class="citation"><a href="${source}">source</a></p>
-<button class="box button js-next-question">Next Question</button>
-`);
+		<h2>${textResponse}</h2>
+		<div class="answer-option">${optCorrectResponse}</div>
+		<p>${feedback}</p>
+		<p class="citation"><a href="${source}">source</a></p>
+		${buttonAction}
+	`);
 	return (string);
 }
 
-function renderFeedback() {
-	$('.js-feedback-section').html(createFeedbackString(currentQuestionNumber-1))
-
-
-	// render, changing response based on right or wrong
+function renderFeedback(answerStatus) {
+	$('.js-feedback-section').html(createFeedbackString(currentQuestionNumber-1, answerStatus));
 }
 
-function handleStartButton() {
-	 $('.js-quiz-start').click(function() {
+function renderFinal() {
+	scoreCritique = "an amazing (or something else)";
+	string = (`<h2>Quiz Complete</h2>
+				<p>Thank you for taking the quiz. It turns out you have 
+				<span class="js-quiz-critique">${scoreCritique}</span>
+				knowledge of bicycle laws and safety in Oregon</p>
+				<button value="Start Again" class="box button">Take The Quiz Again</button>`);
+	$('.js-final-section').html(string);
+}
+
+function annimateButton(target, status) {
+	if (status == 0) { $(target).addClass("incorrect") }
+	else { $(target).addClass("correct") }
+}
+
+function handleTheClicks() {
+	$('.js-quiz-start').click(function() {
   		renderQuizPage ();
   		showSection ('.js-quiz-section')
-  		runQuiz(currentQuestionNumber);
-
-});
-}
-
-
-function getAnswerClicks() {
-
-	// should return the array location of the answer
-
+	});
 	$('.js-quiz-section').on('click', 'button', function(event) { 
-	// $('.js-quiz-section').click($('.js-answer-a') =>nt) { 
 		event.preventDefault();
-		// let answer = $('.js-answer-a').click();
-		let answer = event;
-		// console.log($(answer).val()) ;
-		console.log($(this).val());
-
-		// alert($(this).attr("value"));
-		// if ($(answer).hasClass('.js-answer-a')) {testAlert('it does')}
-		console.log(`was A clicked? ${$(this).hasClass('js-answer-a')}`);
-
-
-			
-		// testAlert(answer.val());
-
+		let status = 0;
+		let correct = getCorrectAnswer();
+		let answer = $(this).val();
+		if (answer === correct) status = 1;
+		scoreCard.push(status);
+		window.setTimeout(annimateButton($(this), status), 3000);
+		renderFeedback(status);
+		window.setTimeout(showSection('.js-feedback-section'), 3000);
 	})
-		// listen for answer
-	
-	// retrieve answer number
-	// check for true against MasterQuizList
-}
-
-
-
-function checkAnswerStatus(answer) {
-	// if 
-
-		
+	$('.js-feedback-section').on('click', 'button', function(event) { 
+		event.preventDefault();
+		let buttonValue = $(this).val();
+		if (buttonValue === "next") {
+			currentQuestionNumber++;
+			renderQuizPage();
+			showSection('.js-quiz-section');	}
+		else if (buttonValue === "final") {
+			renderFinal();
+			showSection('.js-final-section');	}
+	});
+	$('.js-final-section').on('click', 'button', function(event) { 
+		event.preventDefault();
+		let buttonValue = $(this).val();
+		if (buttonValue === "Start Again") reInitialize();
+	});
 }
 
 
 function stopFormLoad() {
 	$('.js-quiz-section').on('submit', 'button', function(event) { 
 		event.preventDefault();
-		// console.log($('.js-quiz-section').val);  
 	})
 }
 
@@ -184,48 +169,26 @@ function generateQuestions() {
 }
 
 function shuffleAnswers() {
-	for (i=0; i<quizList.length; i++) {
-		let a = quizList[i];
-		let b = a['Answers'];
-		shuffle(b);
+	for (i = 0; i < quizList.length; i++) {
+		shuffle(quizList[i].Answers);
 	}
 }
 
+function reInitialize() {
+	currentQuestionNumber = 1;
+	scoreCard = [];
+	quizList = [];
+	generateQuestions();
+	shuffleAnswers();
+	showSection('.js-quiz-section');
 
-function runQuiz(i) {
-	// for(i; i<=quizLength; i++) {
-	// 	renderQuizPage();
-	// 	showSection('.js-quiz-section');
-	// 	stopFormLoad();
-	// 	getAnswerClicks();
-	// 	checkAnswerStatus();
-	// 	renderFeedback();
-	// 	showSection('.js-feedback-section');
-	// }
 }
-
 
 function initialize() {
 	generateQuestions();
 	shuffleAnswers();
-	// stopFormLoad();
-	handleStartButton();
-
 	stopFormLoad();
-	getAnswerClicks();
-	// showSection(".js-feedback-section");
-
-
+	handleTheClicks();
 }
 
-
-// $('.js-answer-a').on('click', testAlert());
-// currentQuestionNumber++;
 initialize();
-
-	// renderFeedback();
-	// showSection(".js-feedback-section");
-
-
-
-
