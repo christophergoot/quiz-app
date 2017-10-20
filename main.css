@@ -11,19 +11,32 @@
 	margin: 0 auto;
 }
 
-
-/*
-
-.start-page {
+.hidden {
 	display: none;
 }
 
-.feedback-page {
+.incorrect {
+	background-color: pink;
+}
+
+.correct {
+	background-color: lightgreen;
+}
+
+
+/*.start-section {
+	display: normal;
+}
+
+.quiz-section {
+	display: none;	
+}
+
+.feedback-section {
 	display: none;
 }
 
-.final-page {
+.final-section {
 	display: none;
 }
-
 */
