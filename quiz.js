@@ -1,21 +1,21 @@
 // 'use strict';
 
 let currentQuestionNumber = 1;
-let quizLength = 10;
+let quizLength = 5;
 let scoreCard = [];
 let quizList = [];
 const MasterQuizList = [
-{ 'Question' : 'What age can you legally stop wearing a helmet?', 'Correct Answer' : '16', 'Answers' : [ '16', '13', 'Any Age', 'Never. All cyclists must wear helmets'], 'Feedback' : 'Additionally, it is against the law to carry a passenger under the age of 16 on your bicycle if the passenger is not wearing a helmet.', 'Source' : 'https://www.portlandoregon.gov/transportation/article/301187' },
-{ 'Question' : 'What year was the "Bike Bill" written? <br>It states that all road projects must accomodate bicycles', 'Correct Answer' : '1971', 'Answers' : [ '1971', '1993', '2000', '2015'], 'Feedback' : 'It applies to ODOT, cities and counties and requires spending reasonable amounts of their share of the state highway fund on facilities for pedestrians and bicyclists. These facilities must be located within the right-of-way of public roads, streets or highways open to motor vehicle traffic. The funds cannot be spent on trails in parks or other areas outside of a road, street or highway right-of-way.', 'Source' : 'http://www.oregon.gov/odot/programs/pages/bikeped.aspx' },
-{ 'Question' : 'On a road with no shoulder or bike lane you should ride', 'Correct Answer' : 'In the <strong>center</strong> of the lane', 'Answers' : [ 'In the <strong>center</strong> of the lane', 'The <strong>far right</strong> of the lane', 'Ride on the <strong>grass</strong>', 'Walk on the <strong>sidewalk</strong>'], 'Feedback' : 'This will prevent motorists from passing you when there isn/’t room. You should also take the lane when you/’re traveling at the same speed as traffic. This will keep you out of motorists/’ blind spots and reduce conflicts with right-turning traffic.', 'Source' : 'https://docs.google.com/viewer?url=http%3A%2F%2Fwww.oregon.gov%2FODOT%2FPrograms%2FTDD%2520Documents%2FOregon-Bicyclist-Manual.pdf' },
-{ 'Question' : 'In a car, at a red light with a "Bike Box". You are legally required to:', 'Correct Answer' : 'Wait <strong>behind box</strong> for the green light', 'Answers' : [ 'Wait <strong>behind box</strong> for the green light', 'Make a <strong>right hand turn</strong> if clear', 'Wait <strong>inside box</strong> if no bicycles are present', 'Bike Boxes are <strong>unregulated</strong>'], 'Feedback' : 'When you bike: Roll up to the front of the line when there\’s a yellow or red light. If the light is green, watch for vehicles turning right before continuing through the intersection. Only cyclists can take a right on red when there\’s a bike box.', 'Source' : 'https://www.portlandoregon.gov/transportation/article/594206' },
-{ 'Question' : 'A bicycle with electric assist is legally considered:', 'Correct Answer' : 'A Bicycle', 'Answers' : [ 'A Bicycle', 'A Motor Vehicle', 'Illegal', 'A grey area'], 'Feedback' : 'This one has been on the books for over 20 years. 814.405: Status of electric assisted bicycle.', 'Source' : 'https://bikeportland.org/resources/bicyclelaws#814405' },
-{ 'Question' : 'A bicyclist can ride on the sidewalk or crosswalk:', 'Correct Answer' : 'If safe', 'Answers' : [ 'If safe', 'They can <strong>only walk</strong> the bike', 'As if it were a <strong>bicycle lane</strong>', 'Never.'], 'Feedback' : 'Operation of an electric assisted bicycle on a sidewalk is NEVER permitted', 'Source' : 'https://bikeportland.org/resources/bicyclelaws#814405' },
-{ 'Question' : 'A vehicle can park in a bicycle lane:', 'Correct Answer' : 'If they are <strong>making a delivery</strong>', 'Answers' : [ 'If they are <strong>making a delivery</strong>', 'Between 8pm and 6am', 'If outside a <strong>job site</strong>', 'Never.'], 'Feedback' : 'An implement of husbandry may also momentarily cross into a bicycle lane to permit other vehicles to overtake and pass the implement of husbandry.', 'Source' : 'https://www.oregonlaws.org/ors/811.440' },
+{ 'Question' : 'Under Oregon law, who must wear a bicycle helmet?', 'Correct Answer' : 'Anyone under the age of 16', 'Answers' : [ 'Anyone under the age of 16', 'Anyone under the age of 13', 'Any cyclist, regardless of age', 'Helmet use is strongly encouraged, but unregulated in Oregon'], 'Feedback' : 'Additionally, it is against the law to carry a passenger under the age of 16 on your bicycle if the passenger is not wearing a helmet.', 'Source' : 'https://www.portlandoregon.gov/transportation/article/301187' },
+{ 'Question' : 'Oregon has a "Bike Bill", which requires the inclusion of facilities for pedestrians and bicyclists wherever a road, street or highway is built or rebuilt. Which year was it passed?', 'Correct Answer' : '1971', 'Answers' : [ '1971', '1993', '2000', '2015'], 'Feedback' : 'ORS 366.514, aka the bike bill, was passed by the Oregon Legislature in 1971. It applies to ODOT, cities and counties and requires spending reasonable amounts of their share of the state highway fund on facilities for pedestrians and bicyclists. These facilities must be located within the right-of-way of public roads, streets or highways open to motor vehicle traffic. The funds cannot be spent on trails in parks or other areas outside of a road, street or highway right-of-way.', 'Source' : 'http://www.oregon.gov/odot/programs/pages/bikeped.aspx' },
+{ 'Question' : 'When on a road with no shoulder or bike lane, and the travel lane is narrow, you should', 'Correct Answer' : 'Ride in the center of the lane', 'Answers' : [ 'Ride in the center of the lane', 'Ride to the far right of the lane', 'Ride on the sidewalk', 'Dismount and walk on the sidewalk'], 'Feedback' : 'This will prevent motorists from passing you when there isn’t room. You should also take the lane when you’re traveling at the same speed as traffic. This will keep you out of motorists’ blind spots and reduce conflicts with right-turning traffic.', 'Source' : 'https://docs.google.com/viewer?url=http%3A%2F%2Fwww.oregon.gov%2FODOT%2FPrograms%2FTDD%2520Documents%2FOregon-Bicyclist-Manual.pdf' },
+{ 'Question' : 'When driving, you aproach a red light at an intersection with a green "Bike Box". You are legally required to. . .', 'Correct Answer' : 'Stop in advance of the box, and remain parked until the light turns green and the box is empty', 'Answers' : [ 'Stop in advance of the box, and remain parked until the light turns green and the box is empty', 'Stop in advance of the box, and proceed to make a right hand turn ONLY if the box is clear', 'Stop in advance of the box if there are bicycles present, otherwise proceed to pull up to the front of the intersection', 'Approach the bicycle box with caution, but be aware that there is no additional legal requirement to accomodate bicyclists'], 'Feedback' : 'When you bike: Roll up to the front of the line when there’s a yellow or red light. If the light is green, watch for vehicles turning right before continuing through the intersection. Only cyclists can take a right on red when there’s a bike box.', 'Source' : 'https://www.portlandoregon.gov/transportation/article/594206' },
+{ 'Question' : 'A bicycle equiped with and electric assist system, for the purposes of the Oregon Vehicle Code, shal be considered:', 'Correct Answer' : 'a Bicycle', 'Answers' : [ 'a Bicycle', 'a Motor Vehicle in practice', 'illegal, unless registered as a motor vehicle', 'There is no statute in place regarding electric assisted bicycles.'], 'Feedback' : 'This one has been on the books for over 20 years. 814.405: Status of electric assisted bicycle.', 'Source' : 'https://bikeportland.org/resources/bicyclelaws#814405' },
+{ 'Question' : 'A bicyclist is legally permitted to', 'Correct Answer' : 'Ride their bicycle on the sidewalk or crosswalk in a safe manner', 'Answers' : [ 'Ride their bicycle on the sidewalk or crosswalk in a safe manner', 'Only walk their bicycle on the sidewalk or crosswalk', 'Treat the sidewalk or crosswalk as a defacto bicycle lane in the absence of pedestrians', 'Overtake a pedestrian at a speed greater than an ordinary walk to long as an audible warning is given'], 'Feedback' : 'Operation of an electric assisted bicycle on a sidewalk is NEVER permitted', 'Source' : 'https://bikeportland.org/resources/bicyclelaws#814405' },
+{ 'Question' : 'A commercial vehicle is permitted to park in a bicycle lane', 'Correct Answer' : 'If they are in the process of making a delivery', 'Answers' : [ 'If they are in the process of making a delivery', 'Between the hours of 8am and 5pm', 'Only if they are speciffically licenced to do so', 'Never.'], 'Feedback' : 'An implement of husbandry may also momentarily cross into a bicycle lane to permit other vehicles to overtake and pass the implement of husbandry.', 'Source' : 'https://www.oregonlaws.org/ors/811.440' },
 { 'Question' : 'The average age of bicyclists killed in crashes with motor vehicles is', 'Correct Answer' : '45', 'Answers' : [ '45', '25', '35', '55'], 'Feedback' : 'The average age of bicyclists killed in crashes with motor vehicles continues to increase, climbing to 45 years old in 2014, up from 39 in 2004, 32 in 1998, and 24 in 1988.', 'Source' : 'http://www.pedbikeinfo.org/data/factsheet_crash.cfm' },
-{ 'Question' : 'A bicyclist may proceed though a red light:', 'Correct Answer' : 'If the light does not turn green after <strong>one full cycle</strong>', 'Answers' : [ 'If the light does not turn green after <strong>one full cycle</strong>', 'After coming to a <strong>complete stop</strong>', 'Never', 'If there are <strong>no cars</strong> around'], 'Feedback' : 'The 2015 law holds motorcyclists and bicyclists proceeding through a red liable if there\'s a collision with other road users proceeding through a green light. For motorcyclists, it would also apply to highway ramp meters.  Rolling through stop signs remains illegal.', 'Source' : 'http://www.oregonlive.com/commuting/index.ssf/2015/03/bicycles_oregon_law_run_red_li.html' },
-{ 'Question' : 'A cyclist must signal a stop or turn while operating a bicycle:', 'Correct Answer' : '<strong>Always</strong> if they can', 'Answers' : [ '<strong>Always</strong> if they can', 'If they <strong>want</strong>', 'Never', 'Only in a <strong>dense</strong> urban core'], 'Feedback' : 'Failure to signal for a bicycle turn is a Class D traffic violation since 1983', 'Source' : 'https://bikeportland.org/resources/bicyclelaws#814405' },
-{ 'Question' : 'Unlawful passengers on bicycle', 'Correct Answer' : 'Where there are <strong>more butts</strong> than seats', 'Answers' : [ 'Where there are <strong>more butts</strong> than seats', 'Is <strong>not</strong> a real thing', 'Is only enforced at the <strong>circus</strong>', 'Only applies to riding on the <strong>handlebars</strong>'], 'Feedback' : 'A person operating an electric personal assistive mobility device is not subject to this section.', 'Source' : 'https://bikeportland.org/resources/bicyclelaws#814405' }
+{ 'Question' : 'A bicyclist may proceed at a red light', 'Correct Answer' : 'If the signal fails to turn green after a "one full cycle."', 'Answers' : [ 'If the signal fails to turn green after a "one full cycle."', 'After coming to a complete stop', 'Never', 'Only in the absence of motor vehicles'], 'Feedback' : 'The 2015 law holds motorcyclists and bicyclists proceeding through a red liable if there\'s a collision with other road users proceeding through a green light. For motorcyclists, it would also apply to highway ramp meters.  Rolling through stop signs remains illegal.', 'Source' : 'http://www.oregonlive.com/commuting/index.ssf/2015/03/bicycles_oregon_law_run_red_li.html' },
+{ 'Question' : 'A cyclist must signal a stop or turn while operating a bicycle', 'Correct Answer' : 'If they can safely do so', 'Answers' : [ 'If they can safely do so', 'If they are so inclined', 'Never', 'Only in a dense urban core'], 'Feedback' : 'Failure to signal for a bicycle turn is a Class D traffic violation since 1983', 'Source' : 'https://bikeportland.org/resources/bicyclelaws#814405' },
+{ 'Question' : 'Unlawful passengers on bicycle', 'Correct Answer' : 'Occurs where there are more persons on the bicycle than the number for which it is designed or safely equipped', 'Answers' : [ 'Occurs where there are more persons on the bicycle than the number for which it is designed or safely equipped', 'Is not a real thing', 'Is only enforced at the circus', 'Only applies to riding on the handlebars'], 'Feedback' : 'A person operating an electric personal assistive mobility device is not subject to this section.', 'Source' : 'https://bikeportland.org/resources/bicyclelaws#814405' }
 ];
 
 function getCorrectAnswer() {
@@ -55,20 +55,20 @@ function createQuestionString(i) {
 			<h2 class="question js-question">${question}</h2>
 			<div class="answer-option">
 				<label for="answer-a" class="answer-label">a)</label>
-				<button id="answer-a" value="${answers[0]}" class="box button">${answers[0]}</button></div>
+				<button id="answer-a" value="${answers[0]}" class="box answer">${answers[0]}</button></div>
 			<div class="answer-option">
 				<label for="answer-b" class="answer-label js-answer-label">b)</label>
-				<button id="answer-b" value="${answers[1]}" class="box button">${answers[1]}</button></div>
+				<button id="answer-b" value="${answers[1]}" class="box answer">${answers[1]}</button></div>
 			<div class="answer-option">
 				<label for="answer-c" class="answer-label js-answer-label">c)</label>
-				<button id="answer-c" value="${answers[2]}" class="box button">${answers[2]}</button></div>
+				<button id="answer-c" value="${answers[2]}" class="box answer">${answers[2]}</button></div>
 			<div class="answer-option">
 				<label for="answer-d" class="answer-label js-answer-label">d)</label>
-				<button id="answer-d" value="${answers[3]}" class="box button">${answers[3]}</button></div>
+				<button id="answer-d" value="${answers[3]}" class="box answer">${answers[3]}</button></div>
 		</form>
 		<div class="progress js-progress">
-			<h4>Question <span class="js-question-number">${currentQuestionNumber}</span> of <span class="js-total-questions">${quizLength}</span>
-			<br><span class="js-correct-answers">${correctAnswerCount}</span> out of <span class="js-given-answers">${currentQuestionNumber-1}</span> correct</h4>
+			<h4>Question <span class="js-question-number">${currentQuestionNumber}</span> of <span class="js-total-questions">${quizLength}</span></h4>
+			<h4><span class="js-correct-answers">${correctAnswerCount}</span> out of <span class="js-given-answers">${currentQuestionNumber-1}</span> correct</h4>
 		</div>`);
 	return (string);
 }
@@ -93,20 +93,19 @@ function createFeedbackString(i, answerStatus) {
 	if (answerStatus == 1) textResponse = "Correct!"
 	let buttonAction = '<button value="next" class="box button js-next-question">Next Question</button>'
 	if (scoreCard.length === quizLength) buttonAction = '<button value="final" class="box button js-final-button">See Results</button>'
-	let optCorrectResponse = `<p>${question}</p><h2>${correctAnswer}</h2>`
+	let optCorrectResponse = `<p>${question}</p><div class="box button correct">${correctAnswer}</div>`
 	const string = (`
-		<div class="feedback-splash"><h2>${textResponse}</h2>
-		<div class="answer-recall">${optCorrectResponse}</div>
-		<p>${feedback}
-		<cite><a href="${source}">source</a></cite></p>
+		<h2>${textResponse}</h2>
+		<div class="answer-option">${optCorrectResponse}</div>
+		<p>${feedback}</p>
+		<p class="citation"><a href="${source}">source</a></p>
 
 		<div class="progress js-progress">
-			<h4>Question <span class="js-question-number">${currentQuestionNumber}</span> of <span class="js-total-questions">${quizLength}</span>
-			<br><span class="js-correct-answers">${correctAnswerCount}</span> out of <span class="js-given-answers">${currentQuestionNumber}</span> correct</h4>
-		</div>	
+			<h4>Question <span class="js-question-number">${currentQuestionNumber}</span> of <span class="js-total-questions">${quizLength}</span></h4>
+			<h4><span class="js-correct-answers">${correctAnswerCount}</span> out of <span class="js-given-answers">${currentQuestionNumber-1}</span> correct</h4>
+		</div>
 
 		${buttonAction}
-		</div>
 	`);
 	return (string);
 }
@@ -115,26 +114,14 @@ function renderFeedback(answerStatus) {
 	$('.js-feedback-section').html(createFeedbackString(currentQuestionNumber-1, answerStatus));
 }
 
-function critiqueScore(score) {
-	console.log(score);
-	let string = "A Terrible";
-	if (score >= 100) string = "An Absolutely Perfect";
-	else if (score >= 80) string = "A Rather Impressive";
-	else if (score >= 60) string = "A Solid";
-	else if (score >= 40) string = "An Unispiring";
-
-	return(string);
-}
-
-
 function renderFinal() {
 	let correctAnswerCount = scoreCard.reduce(add, 0);
+	scoreCritique = "an amazing (or something else)";
 	correctPercent = correctAnswerCount/quizLength*100;
-	scoreCritique = critiqueScore(correctPercent);
 	string = (`<h2>Quiz Complete</h2>
-				<h1>${correctPercent}% Correct</h1>
+				<h2>${correctPercent}% Correct</h2>
 				<p>Thank you for taking the quiz. It turns out you have 
-				<span class="critique">${scoreCritique}</span>
+				<span class="js-quiz-critique">${scoreCritique}</span>
 				knowledge of bicycle laws and safety in Oregon</p>
 				<button value="Start Again" class="box button">Take The Quiz Again</button>
 
@@ -164,10 +151,9 @@ function handleTheClicks() {
 		let answer = $(this).val();
 		if (answer === correct) status = 1;
 		scoreCard.push(status);
-		annimateButton($(this), status);
+		window.setTimeout(annimateButton($(this), status), 3000);
 		renderFeedback(status);
-		showSection('.js-feedback-section');
-		$(this).removeClass("incorrect", "correct")
+		window.setTimeout(showSection('.js-feedback-section'), 3000);
 	})
 	$('.js-feedback-section').on('click', 'button', function(event) { 
 		event.preventDefault();
@@ -211,7 +197,6 @@ function reInitialize() {
 	quizList = [];
 	generateQuestions();
 	shuffleAnswers();
-	renderQuizPage();
 	showSection('.js-quiz-section');
 
 }
