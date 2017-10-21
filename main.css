@@ -1,14 +1,82 @@
+body {
+  font-family: Arial, Sans-Serif;
+  font-size: 16px;
+  text-align: center;
+  background-color: black;
+  color: #888989;
+  font-weight: 200;
+}
 
 .box {
-	border-radius: 5px;
+  max-width: 600px;
+  margin: 20px 40px;
+  background-color: white;
+  overflow: hidden;
+  border-radius: 5px;
+  margin: 10px auto;
+}
+
+.buy-button, .input-box {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 200;
+}
+
+.button {
+	border-radius: 2px;
+  border: 1px solid #FD4D72;
+  /*color: #FD4D72;*/
+  background-color: transparent;
+}
+
+a {
+  color: #FD4D72;
+  text-decoration: none;
+}
+
+  
+.inner-container {
+		background: url("background-bicycle.jpg") no-repeat center center fixed;
+	background-size: cover;
+
+}  
+
+header {
+	margin: 0 0 50px 0;
+	margin-top: 0;
+	width: 100%;
+	border-bottom: solid grey;
+	background-color: white;
+}
+h1{
+	margin: 0 auto;
+}
+
+
+.box {
+	border-radius: 1%;
 	border: 1px solid black;
 	margin: 5px;
 	padding: 5px;
 }
 
 .container {
+	background-color: white;
 	max-width: 600px;
 	margin: 0 auto;
+}
+
+.button {
+	width: 75%;
+	margin: 0 auto;
+	font-size: 1em;
+}
+
+.question {
+	padding: 0 15%;
+}
+.answer {
+	width: 50%;
 }
 
 .hidden {
@@ -23,20 +91,3 @@
 	background-color: lightgreen;
 }
 
-
-/*.start-section {
-	display: normal;
-}
-
-.quiz-section {
-	display: none;	
-}
-
-.feedback-section {
-	display: none;
-}
-
-.final-section {
-	display: none;
-}
-*/

@@ -86,6 +86,7 @@ function createFeedbackString(i, answerStatus) {
 	let obj = MasterQuizList[i];
 	let question = quizList[i]['Question'];
 	let correctAnswer = quizList[i]['Correct Answer'];
+	let correctAnswerCount = scoreCard.reduce(add, 0);
 	let feedback = quizList[i]['Feedback'];
 	let source = quizList[i]['Source'];
 	let textResponse = "Sorry, that's not correct";
@@ -98,6 +99,12 @@ function createFeedbackString(i, answerStatus) {
 		<div class="answer-option">${optCorrectResponse}</div>
 		<p>${feedback}</p>
 		<p class="citation"><a href="${source}">source</a></p>
+
+		<div class="progress js-progress">
+			<h4>Question <span class="js-question-number">${currentQuestionNumber}</span> of <span class="js-total-questions">${quizLength}</span></h4>
+			<h4><span class="js-correct-answers">${correctAnswerCount}</span> out of <span class="js-given-answers">${currentQuestionNumber-1}</span> correct</h4>
+		</div>
+
 		${buttonAction}
 	`);
 	return (string);
@@ -108,12 +115,22 @@ function renderFeedback(answerStatus) {
 }
 
 function renderFinal() {
+	let correctAnswerCount = scoreCard.reduce(add, 0);
 	scoreCritique = "an amazing (or something else)";
+	correctPercent = correctAnswerCount/quizLength*100;
 	string = (`<h2>Quiz Complete</h2>
+				<h2>${correctPercent}% Correct</h2>
 				<p>Thank you for taking the quiz. It turns out you have 
 				<span class="js-quiz-critique">${scoreCritique}</span>
 				knowledge of bicycle laws and safety in Oregon</p>
-				<button value="Start Again" class="box button">Take The Quiz Again</button>`);
+				<button value="Start Again" class="box button">Take The Quiz Again</button>
+
+		<div class="progress js-progress">
+			<h4><span class="js-correct-answers">${correctAnswerCount}</span> out of <span class="js-given-answers">${currentQuestionNumber}</span> correct</h4>
+		</div>
+
+
+				`);
 	$('.js-final-section').html(string);
 }
 
