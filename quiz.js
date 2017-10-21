@@ -111,7 +111,20 @@ function createFeedbackString(i, answerStatus) {
 	return (string);
 }
 
+function visualizeAnswerStatus(answerStatus) {
+	if (answerStatus === 1) {
+		$('.js-feedback-section').removeClass('incorrect');
+		$('.js-feedback-section').addClass('correct');  
+	}
+	if (answerStatus === 0) {	
+		console.log('wrong answer');
+		$('.js-feedback-section').removeClass('correct');
+		$('.js-feedback-section').addClass('incorrect'); 
+	}
+}
+
 function renderFeedback(answerStatus) {
+	visualizeAnswerStatus(answerStatus);
 	$('.js-feedback-section').html(createFeedbackString(currentQuestionNumber-1, answerStatus));
 }
 
@@ -129,9 +142,9 @@ function critiqueScore(score) {
 
 function renderFinal() {
 	let correctAnswerCount = scoreCard.reduce(add, 0);
-	correctPercent = correctAnswerCount/quizLength*100;
-	scoreCritique = critiqueScore(correctPercent);
-	string = (`<h2>Quiz Complete</h2>
+	let correctPercent = correctAnswerCount/quizLength*100;
+	let scoreCritique = critiqueScore(correctPercent);
+	let string = (`<h2>Quiz Complete</h2>
 				<h1>${correctPercent}% Correct</h1>
 				<p>Thank you for taking the quiz. It turns out you have 
 				<span class="critique">${scoreCritique}</span>

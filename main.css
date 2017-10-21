@@ -36,6 +36,9 @@ main {
 	box-shadow: 2px 2px 3px 1px grey;
 	padding: 10px;
 	border-radius: 5px;
+	background-color: white;
+	width: 85%;
+	margin: 0 auto;
 }
 
 
@@ -116,10 +119,20 @@ cite {
 }
 
 .incorrect {
-	background-color: pink;
+-webkit-box-shadow: inset 10px 10px 116px -19px rgba(NaN,13,NaN,1);
+-moz-box-shadow: inset 10px 10px 116px -19px rgba(NaN,13,NaN,1);
+box-shadow: inset 10px 10px 116px -19px rgba(NaN,13,NaN,1);
+
 }
 
 .correct {
-	background-color: lightgreen;
+-webkit-box-shadow: inset 0px 50px 227px -64px rgba(54,128,5,1);
+-moz-box-shadow: inset 0px 50px 227px -64px rgba(54,128,5,1);
+box-shadow: inset 0px 50px 227px -64px rgba(54,128,5,1);
+}
+
+.feedback-splash {
+	 border-radius: 7px;
+ 
 }
 
