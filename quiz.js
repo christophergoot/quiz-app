@@ -73,7 +73,6 @@ function createQuestionString(i) {
 }
 
 function renderQuizPage() {
-	clearOldStyles();
 	$('.js-quiz-section').html(createQuestionString(currentQuestionNumber-1))
 }
 

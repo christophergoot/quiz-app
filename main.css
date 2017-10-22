@@ -96,6 +96,7 @@ cite {
 }
 
 .incorrect {
+<<<<<<< HEAD
 	-webkit-box-shadow: inset 0px 50px 101px 0px rgba(255,0,0,0.25), 0px -1px 7px 1px rgba(255,0,0,0.25);
 	-moz-box-shadow: inset 0px 50px 101px 0px rgba(255,0,0,0.25), 0px -1px 7px 1px rgba(255,0,0,0.25);
 	box-shadow: inset 0px 50px 101px 0px rgba(255,0,0,0.25), 0px -1px 7px 1px rgba(255,0,0,0.25);
@@ -105,6 +106,23 @@ cite {
 	-webkit-box-shadow: inset 0px 50px 101px 0px rgba(0,192,42,0.25), 0px -1px 7px 1px rgba(0,192,42,0.25);
 	-moz-box-shadow: inset 0px 50px 101px 0px rgba(0,192,42,0.25), 0px -1px 7px 1px rgba(0,192,42,0.25);
 	box-shadow: inset 0px 50px 101px 0px rgba(0,192,42,0.25), 0px -1px 7px 1px rgba(0,192,42,0.25);
+=======
+-webkit-box-shadow: inset 10px 10px 116px -19px rgba(NaN,13,NaN,1);
+-moz-box-shadow: inset 10px 10px 116px -19px rgba(NaN,13,NaN,1);
+box-shadow: inset 10px 10px 116px -19px rgba(NaN,13,NaN,1);
+
+}
+
+.correct {
+-webkit-box-shadow: inset 0px 50px 227px -64px rgba(54,128,5,1);
+-moz-box-shadow: inset 0px 50px 227px -64px rgba(54,128,5,1);
+box-shadow: inset 0px 50px 227px -64px rgba(54,128,5,1);
+}
+
+.feedback-splash {
+	 border-radius: 7px;
+ 
+>>>>>>> parent of 10e4aef... added color feedback to answer status
 }
 
 .hidden {
