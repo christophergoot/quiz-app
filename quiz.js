@@ -146,8 +146,6 @@ function renderFinal() {
 		<div class="progress js-progress">
 			<h4><span class="js-correct-answers">${correctAnswerCount}</span> out of <span class="js-given-answers">${currentQuestionNumber}</span> correct</h4>
 		</div>
-
-
 				`);
 	$('.js-final-section').html(string);
 }
@@ -193,6 +191,7 @@ function handleTheClicks() {
 	});
 }
 
+// not currently implemented
 function handleTheKeys() {
 	$('body').keypress(function(event) {
 		let key = event.which;
