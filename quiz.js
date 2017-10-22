@@ -49,7 +49,6 @@ function createQuestionString(i) {
 	let correctAnswer = quizList[i]['Correct Answer'];
 	let correctAnswerCount = scoreCard.reduce(add, 0);
 	let answers = quizList[i].Answers;
-	// const	string = '<form><h2 class="question js-question">' + question + '</h2><div class="answer-option"><label for="answer-a" class="answer-label js-answer-label">a)</label><button name="answer-a" class="box answer js-answer-a">' + answerA + '</button></div><div class="answer-option"><label for="answer-a" class="answer-label js-answer-label">b)</label><button name="answer-b" class="box answer js-answer-b">' + answerB + '</button></div><div class="answer-option"><label for="answer-a" class="answer-label js-answer-label">c)</label><button name="answer-c" class="box answer js-answer-c">' + answerC + '</button></div><div class="answer-option"><label for="answer-a" class="answer-label js-answer-label">d)</label><button name="answer-d" class="box answer js-answer-d">' + answerD + '</button></div></form><div class="progress js-progress"><h4>Question <span class="js-question-number">1</span> of <span class="js-total-questions">10</span></h4><h4><span class="js-correct-answers">0</span> out of <span class="js-given-answers">0</span> correct</h4></div>';
 	const	string = (`
 		<form>
 			<h2 class="question js-question">${question}</h2>
@@ -71,10 +70,6 @@ function createQuestionString(i) {
 			<br><span class="js-correct-answers">${correctAnswerCount}</span> out of <span class="js-given-answers">${currentQuestionNumber-1}</span> correct</h4>
 		</div>`);
 	return (string);
-}
-
-function clearOldStyles() {
-	// clear the correct or incorrect from previous quiz Results
 }
 
 function renderQuizPage() {
@@ -104,8 +99,7 @@ function createFeedbackString(i, answerStatus) {
 			<h4>Question <span class="js-question-number">${currentQuestionNumber}</span> of <span class="js-total-questions">${quizLength}</span>
 			<br><span class="js-correct-answers">${correctAnswerCount}</span> out of <span class="js-given-answers">${currentQuestionNumber}</span> correct</h4>
 		</div>	
-
-		${buttonAction}
+			${buttonAction}
 		</div>
 	`);
 	return (string);
@@ -130,12 +124,11 @@ function renderFeedback(answerStatus) {
 
 function critiqueScore(score) {
 	console.log(score);
-	let string = "A Terrible";
-	if (score >= 100) string = "An Absolutely Perfect";
-	else if (score >= 80) string = "A Rather Impressive";
-	else if (score >= 60) string = "A Solid";
-	else if (score >= 40) string = "An Unispiring";
-
+	let string = "a Terrible";
+	if (score >= 100) string = "an Absolutely Perfect";
+	else if (score >= 80) string = "a Rather Impressive";
+	else if (score >= 60) string = "a Solid";
+	else if (score >= 40) string = "an Unispiring";
 	return(string);
 }
 
@@ -172,6 +165,7 @@ function handleTheClicks() {
 	});
 	$('.js-quiz-section').on('click', 'button', function(event) { 
 		event.preventDefault();
+		console.log($(this));
 		let status = 0;
 		let correct = getCorrectAnswer();
 		let answer = $(this).val();
@@ -200,12 +194,20 @@ function handleTheClicks() {
 	});
 }
 
-
-function stopFormLoad() {
-	$('.js-quiz-section').on('submit', 'button', function(event) { 
-		event.preventDefault();
-	})
-}
+function handleTheKeys() {
+	$('body').keypress(function(event) {
+		let key = event.which;
+		if (!$('.js-quiz-section').hasClass("hidden")) {
+			if (key == 97 || key == 65) $("#answer-a").trigger("click");
+			if (key == 98 || key == 66) $("#answer-b").trigger("click");
+			if (key == 99 || key == 67) $("#answer-c").trigger("click");
+			if (key == 100 || key == 68) $("#answer-d").trigger("click");	}
+		if (!$('.js-start-section').hasClass("hidden")) 	{$(".js-quiz-start").trigger("click");}
+		if (!$('.js-feedback-section').hasClass("hidden"))	{$(".js-next-question").trigger("click");
+															 $(".js-final-button")}
+		if (!$('.js-final-section').hasClass("hidden")) 	{$(".button").trigger("click");}
+		})
+	}
 
 function generateQuestions() {
 	shuffle(MasterQuizList);
@@ -232,8 +234,9 @@ function reInitialize() {
 function initialize() {
 	generateQuestions();
 	shuffleAnswers();
-	stopFormLoad();
 	handleTheClicks();
+// not doing what i want just yet. will be a future upgrade. fuction launched by click depends on $.this
+// 	handleTheKeys();
 }
 
 initialize();
