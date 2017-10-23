@@ -1,3 +1,4 @@
+$(() => {
 'use strict';
 
 let quizLength = 5;
@@ -7,8 +8,8 @@ let quizList = [];
 const MasterQuizList = [
 { 'Question' : 'What age can you legally stop wearing a helmet?', 'Correct Answer' : '16', 'Answers' : [ '16', '13', 'Any Age', 'Never. All cyclists must wear helmets'], 'Feedback' : 'Additionally, it is against the law to carry a passenger under the age of 16 on your bicycle if the passenger is not wearing a helmet.', 'Source' : 'https://www.portlandoregon.gov/transportation/article/301187' },
 { 'Question' : 'What year was the "Bike Bill" written? <br>It states that all road projects must accomodate bicycles', 'Correct Answer' : '1971', 'Answers' : [ '1971', '1993', '2000', '2015'], 'Feedback' : 'It applies to ODOT, cities and counties and requires spending reasonable amounts of their share of the state highway fund on facilities for pedestrians and bicyclists. These facilities must be located within the right-of-way of public roads, streets or highways open to motor vehicle traffic. The funds cannot be spent on trails in parks or other areas outside of a road, street or highway right-of-way.', 'Source' : 'http://www.oregon.gov/odot/programs/pages/bikeped.aspx' },
-{ 'Question' : 'On a road with no shoulder or bike lane you should ride', 'Correct Answer' : 'In the <strong>center</strong> of the lane', 'Answers' : [ 'In the <strong>center</strong> of the lane', 'The <strong>far right</strong> of the lane', 'Ride on the <strong>grass</strong>', 'Walk on the <strong>sidewalk</strong>'], 'Feedback' : 'This will prevent motorists from passing you when there isn/’t room. You should also take the lane when you/’re traveling at the same speed as traffic. This will keep you out of motorists/’ blind spots and reduce conflicts with right-turning traffic.', 'Source' : 'https://docs.google.com/viewer?url=http%3A%2F%2Fwww.oregon.gov%2FODOT%2FPrograms%2FTDD%2520Documents%2FOregon-Bicyclist-Manual.pdf' },
-{ 'Question' : 'In a car, at a red light with a "Bike Box". You are legally required to:', 'Correct Answer' : 'Wait <strong>behind box</strong> for the green light', 'Answers' : [ 'Wait <strong>behind box</strong> for the green light', 'Make a <strong>right hand turn</strong> if clear', 'Wait <strong>inside box</strong> if no bicycles are present', 'Bike Boxes are <strong>unregulated</strong>'], 'Feedback' : 'When you bike: Roll up to the front of the line when there\’s a yellow or red light. If the light is green, watch for vehicles turning right before continuing through the intersection. Only cyclists can take a right on red when there\’s a bike box.', 'Source' : 'https://www.portlandoregon.gov/transportation/article/594206' },
+{ 'Question' : 'On a road with no shoulder or bike lane you should ride', 'Correct Answer' : 'In the <strong>center</strong> of the lane', 'Answers' : [ 'In the <strong>center</strong> of the lane', 'The <strong>far right</strong> of the lane', 'Ride on the <strong>grass</strong>', 'Walk on the <strong>sidewalk</strong>'], 'Feedback' : 'This will prevent motorists from passing you when there isn\'t room. You should also take the lane when you\'re traveling at the same speed as traffic. This will keep you out of motorists\' blind spots and reduce conflicts with right-turning traffic.', 'Source' : 'https://docs.google.com/viewer?url=http%3A%2F%2Fwww.oregon.gov%2FODOT%2FPrograms%2FTDD%2520Documents%2FOregon-Bicyclist-Manual.pdf' },
+{ 'Question' : 'In a car, at a red light with a "Bike Box". You are legally required to:', 'Correct Answer' : 'Wait <strong>behind box</strong> for the green light', 'Answers' : [ 'Wait <strong>behind box</strong> for the green light', 'Make a <strong>right hand turn</strong> if clear', 'Wait <strong>inside box</strong> if no bicycles are present', 'Bike Boxes are <strong>unregulated</strong>'], 'Feedback' : 'When you bike: Roll up to the front of the line when there\'s a yellow or red light. If the light is green, watch for vehicles turning right before continuing through the intersection. Only cyclists can take a right on red when there\'s a bike box.', 'Source' : 'https://www.portlandoregon.gov/transportation/article/594206' },
 { 'Question' : 'A bicycle with electric assist is legally considered:', 'Correct Answer' : 'A Bicycle', 'Answers' : [ 'A Bicycle', 'A Motor Vehicle', 'Illegal', 'A grey area'], 'Feedback' : 'This one has been on the books for over 20 years. 814.405: Status of electric assisted bicycle.', 'Source' : 'https://bikeportland.org/resources/bicyclelaws#814405' },
 { 'Question' : 'A bicyclist can ride on the sidewalk or crosswalk:', 'Correct Answer' : 'If it <strong>is safe</strong> to do so', 'Answers' : [ 'If it <strong>is safe</strong> to do so', 'They can <strong>only walk</strong> the bike', 'As if it were a <strong>bicycle lane</strong>', '<strong>Never</strong>'], 'Feedback' : 'Operation of an electric assisted bicycle on a sidewalk is NEVER permitted', 'Source' : 'https://bikeportland.org/resources/bicyclelaws#814405' },
 { 'Question' : 'A vehicle can park in a bicycle lane:', 'Correct Answer' : 'If they are <strong>making a delivery</strong>', 'Answers' : [ 'If they are <strong>making a delivery</strong>', 'Between <strong>8pm and 6am</strong>', 'If outside a <strong>job site</strong>', '<strong>Never</strong>'], 'Feedback' : 'An implement of husbandry may also momentarily cross into a bicycle lane to permit other vehicles to overtake and pass the implement of husbandry.', 'Source' : 'https://www.oregonlaws.org/ors/811.440' },
@@ -19,7 +20,7 @@ const MasterQuizList = [
 ];
 
 function getCorrectAnswer() {
-	let test = quizList[currentQuestionNumber-1]
+	let test = quizList[currentQuestionNumber-1];
 	let correct = test['Correct Answer'];
 	return(correct);
 }
@@ -33,16 +34,36 @@ function add(a, b) {
     return a + b;
 }
 
-function shuffle (array) {
-// That’s a Fisher-Yates shuffle. 	
-  let i = 0, j = 0, temp = null
-  for (i = array.length - 1; i > 0; i -= 1) {
-    j = Math.floor(Math.random() * (i + 1))
-    temp = array[i]
-    array[i] = array[j]
-    array[j] = temp
-  }
+// function shuffle (array) {
+// // That’s a Fisher-Yates shuffle. 	
+// // Will replace with one of my own
+//   let i = 0, j = 0, temp = null
+//   for (i = array.length - 1; i > 0; i -= 1) {
+//     j = Math.floor(Math.random() * (i + 1))
+//     temp = array[i]
+//     array[i] = array[j]
+//     array[j] = temp
+//   }
+// }
+
+
+function shuffle(arr) {
+	let randArr = [];
+	let newArr = [];
+	let currentHigh = 0;
+	for (let i=0; i<arr.length; i++) randArr.push(Math.random());	
+	for (let i=0; i<arr.length; i++) {
+		for (let randArrIndex = 0; randArrIndex < randArr.length; randArrIndex++) {
+			if (randArr[randArrIndex] > currentHigh) currentHigh = randArrIndex; };
+		newArr.push(arr[currentHigh]);
+		randArr[currentHigh] = 0;
+		currentHigh = 0;
+	}
+	return(newArr)			
 }
+
+
+
 
 function createQuestionString(i) {
 	let question = quizList[i].Question;
@@ -213,9 +234,7 @@ function generateQuestions() {
 }
 
 function shuffleAnswers() {
-	for (let i = 0; i < quizList.length; i++) {
-		shuffle(quizList[i].Answers);
-	}
+	quizList.forEach((val) => shuffle(val.Answers));
 }
 
 function reInitialize() {
@@ -238,3 +257,5 @@ function initialize() {
 }
 
 initialize();
+
+});
