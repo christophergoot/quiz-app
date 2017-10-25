@@ -34,19 +34,6 @@ function add(a, b) {
     return a + b;
 }
 
-// function shuffle (array) {
-// // That’s a Fisher-Yates shuffle. 	
-// // Will replace with one of my own
-//   let i = 0, j = 0, temp = null
-//   for (i = array.length - 1; i > 0; i -= 1) {
-//     j = Math.floor(Math.random() * (i + 1))
-//     temp = array[i]
-//     array[i] = array[j]
-//     array[j] = temp
-//   }
-// }
-
-
 function shuffle(arr) {
 	let randArr = [];
 	let newArr = [];
@@ -72,23 +59,23 @@ function createQuestionString(i) {
 	let answers = quizList[i].Answers;
 	const	string = (`
 		<form>
-			<h2 class="question js-question">${question}</h2>
-			<div class="answer-option">
-				<label for="answer-a" class="answer-label">a)</label>
-				<button id="answer-a" value="${answers[0]}" class="box button">${answers[0]}</button></div>
-			<div class="answer-option">
-				<label for="answer-b" class="answer-label js-answer-label">b)</label>
-				<button id="answer-b" value="${answers[1]}" class="box button">${answers[1]}</button></div>
-			<div class="answer-option">
-				<label for="answer-c" class="answer-label js-answer-label">c)</label>
-				<button id="answer-c" value="${answers[2]}" class="box button">${answers[2]}</button></div>
-			<div class="answer-option">
-				<label for="answer-d" class="answer-label js-answer-label">d)</label>
-				<button id="answer-d" value="${answers[3]}" class="box button">${answers[3]}</button></div>
+			<h2>${question}</h2>
+			<div>
+				<label for="answer-a">a)</label>
+				<button id="answer-a" value="${answers[0]}" class="button">${answers[0]}</button></div>
+			<div>
+				<label for="answer-b">b)</label>
+				<button id="answer-b" value="${answers[1]}" class="button">${answers[1]}</button></div>
+			<div>
+				<label for="answer-c">c)</label>
+				<button id="answer-c" value="${answers[2]}" class="button">${answers[2]}</button></div>
+			<div>
+				<label for="answer-d">d)</label>
+				<button id="answer-d" value="${answers[3]}" class="button">${answers[3]}</button></div>
 		</form>
-		<div class="progress js-progress">
-			<h4>Question <span class="js-question-number">${currentQuestionNumber}</span> of <span class="js-total-questions">${quizLength}</span>
-			<br><span class="js-correct-answers">${correctAnswerCount}</span> out of <span class="js-given-answers">${currentQuestionNumber-1}</span> correct</h4>
+		<div class="progress">
+			<h4>Question ${currentQuestionNumber} of ${quizLength}
+			<br>${correctAnswerCount} out of ${currentQuestionNumber-1} correct</h4>
 		</div>`);
 	return (string);
 }
@@ -106,19 +93,18 @@ function createFeedbackString(i, answerStatus) {
 	let source = quizList[i]['Source'];
 	let textResponse = "Sorry, that's not correct";
 	if (answerStatus == 1) textResponse = "Correct!"
-	let buttonAction = '<button value="next" class="box button js-next-question">Next Question</button>'
-	if (scoreCard.length === quizLength) buttonAction = '<button value="final" class="box button js-final-button">See Results</button>'
+	let buttonAction = '<button value="next" class="button js-next-question">Next Question</button>'
+	if (scoreCard.length === quizLength) buttonAction = '<button value="final" class="button js-final-button">See Results</button>'
 	let optCorrectResponse = `<p>${question}</p><h2>${correctAnswer}</h2>`
 	const string = (`
 		<div class="feedback-splash"><h2>${textResponse}</h2>
-		<div class="answer-recall">${optCorrectResponse}</div>
-		<p>${feedback}
-		<cite><a href="${source}">source</a></cite></p>
-
-		<div class="progress js-progress">
-			<h4>Question <span class="js-question-number">${currentQuestionNumber}</span> of <span class="js-total-questions">${quizLength}</span>
-			<br><span class="js-correct-answers">${correctAnswerCount}</span> out of <span class="js-given-answers">${currentQuestionNumber}</span> correct</h4>
-		</div>	
+			<div class="answer-recall">${optCorrectResponse}</div>
+			<p>${feedback}
+			<cite><a href="${source}">source</a></cite></p>
+			<div class="progress">
+				<h4>Question ${currentQuestionNumber} of ${quizLength}
+				<br>${correctAnswerCount} out of ${currentQuestionNumber} correct</h4>
+			</div>	
 			${buttonAction}
 		</div>
 	`);
@@ -162,10 +148,9 @@ function renderFinal() {
 				<p>Thank you for taking the quiz. It turns out you have 
 				<span class="critique">${scoreCritique}</span>
 				knowledge of bicycle laws and safety in Oregon</p>
-				<button value="Start Again" class="box button">Take The Quiz Again</button>
-
-		<div class="progress js-progress">
-			<h4><span class="js-correct-answers">${correctAnswerCount}</span> out of <span class="js-given-answers">${currentQuestionNumber}</span> correct</h4>
+				<button value="Start Again" class="button">Take The Quiz Again</button>
+		<div class="progress">
+			<h4>${correctAnswerCount} out of ${currentQuestionNumber} correct</h4>
 		</div>
 				`);
 	$('.js-final-section').html(string);
