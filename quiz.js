@@ -20,9 +20,7 @@ const MasterQuizList = [
 ];
 
 function getCorrectAnswer() {
-	let test = quizList[currentQuestionNumber-1];
-	let correct = test['Correct Answer'];
-	return(correct);
+	return(quizList[currentQuestionNumber-1]['Correct Answer']);
 }
 
 function showSection (section) {
@@ -31,26 +29,23 @@ function showSection (section) {
 }
 
 function add(a, b) {
-    return a + b;
+    return(a + b);
 }
 
 function shuffle(arr) {
-	let randArr = [];
-	let newArr = [];
-	let currentHigh = 0;
-	for (let i=0; i<arr.length; i++) randArr.push(Math.random());	
-	for (let i=0; i<arr.length; i++) {
-		for (let randArrIndex = 0; randArrIndex < randArr.length; randArrIndex++) {
-			if (randArr[randArrIndex] > currentHigh) currentHigh = randArrIndex; };
-		newArr.push(arr[currentHigh]);
-		randArr[currentHigh] = 0;
-		currentHigh = 0;
-	}
-	return(newArr)			
+    let randArr = [];
+    let newArr = [];
+    let currentHigh = 0;
+    let currentHighIndex = 0;
+    arr.forEach(val => randArr.push(Math.random()));
+    for (let i=0; i<arr.length; i++) {
+        for (let i = 0; i < arr.length; i++) if (randArr[i] > randArr[currentHigh]) currentHigh = i;
+        newArr.push(arr[currentHigh]);
+        randArr[currentHigh] = 0;
+        currentHigh = 0;
+    }
+    return(newArr);
 }
-
-
-
 
 function createQuestionString(i) {
 	let question = quizList[i].Question;
@@ -93,8 +88,8 @@ function createFeedbackString(i, answerStatus) {
 	let source = quizList[i]['Source'];
 	let textResponse = "Sorry, that's not correct";
 	if (answerStatus == 1) textResponse = "Correct!"
-	let buttonAction = '<button value="next" class="button js-next-question">Next Question</button>'
-	if (scoreCard.length === quizLength) buttonAction = '<button value="final" class="button js-final-button">See Results</button>'
+	let buttonAction = '<button value="next" class="button js-feedback-button">Next Question</button>'
+	if (scoreCard.length === quizLength) buttonAction = '<button value="final" class="button js-feedback-button">See Results</button>'
 	let optCorrectResponse = `<p>${question}</p><h2>${correctAnswer}</h2>`
 	const string = (`
 		<div class="feedback-splash"><h2>${textResponse}</h2>
@@ -156,70 +151,71 @@ function renderFinal() {
 	$('.js-final-section').html(string);
 }
 
-function annimateButton(target, status) {
-	if (status == 0) { $(target).addClass("incorrect") }
-	else { $(target).addClass("correct") }
+function quizStart() {
+	renderQuizPage ();
+	showSection ('.js-quiz-section')
 }
+
+function resolveAnswer(answer) {
+	event.preventDefault();
+	let status = 0;
+	if (answer == getCorrectAnswer()) status = 1;
+	scoreCard.push(status);
+	renderFeedback(status);
+	showSection('.js-feedback-section');
+}
+
+function resolveFeedbackButton() {
+	event.preventDefault();
+	// console.log(`buttonValue is ${buttonValue}`);
+	console.log(($('.js-feedback-button')).val());
+	let buttonValue = $('.js-feedback-button').val();
+	if (buttonValue === "next") {
+		currentQuestionNumber++;
+		renderQuizPage();
+		showSection('.js-quiz-section');	}
+	else if (buttonValue === "final") {
+		renderFinal();
+		showSection('.js-final-section');	}
+}
+
+
 
 function handleTheClicks() {
-	$('.js-quiz-start').click(function() {
-  		renderQuizPage ();
-  		showSection ('.js-quiz-section')
-	});
-	$('.js-quiz-section').on('click', 'button', function(event) { 
-		event.preventDefault();
-		console.log($(this));
-		let status = 0;
-		let correct = getCorrectAnswer();
-		let answer = $(this).val();
-		if (answer === correct) status = 1;
-		scoreCard.push(status);
-		annimateButton($(this), status);
-		renderFeedback(status);
-		showSection('.js-feedback-section');
-		$(this).removeClass("incorrect", "correct")
-	})
+	$('.js-quiz-start').click(function() { quizStart() });
+	$('.js-quiz-section').on('click', 'button', function() { 
+				event.preventDefault();
+				resolveAnswer($(this).val()); });
 	$('.js-feedback-section').on('click', 'button', function(event) { 
 		event.preventDefault();
-		let buttonValue = $(this).val();
-		if (buttonValue === "next") {
-			currentQuestionNumber++;
-			renderQuizPage();
-			showSection('.js-quiz-section');	}
-		else if (buttonValue === "final") {
-			renderFinal();
-			showSection('.js-final-section');	}
+		resolveFeedbackButton($(this).val());
 	});
 	$('.js-final-section').on('click', 'button', function(event) { 
-		event.preventDefault();
-		let buttonValue = $(this).val();
-		if (buttonValue === "Start Again") reInitialize();
+		reInitialize();
 	});
 }
 
-// not currently implemented
 function handleTheKeys() {
 	$('body').keypress(function(event) {
 		let key = event.which;
 		if (!$('.js-quiz-section').hasClass("hidden")) {
-			if (key == 97 || key == 65) $("#answer-a").trigger("click");
-			if (key == 98 || key == 66) $("#answer-b").trigger("click");
-			if (key == 99 || key == 67) $("#answer-c").trigger("click");
-			if (key == 100 || key == 68) $("#answer-d").trigger("click");	}
-		if (!$('.js-start-section').hasClass("hidden")) 	{$(".js-quiz-start").trigger("click");}
-		if (!$('.js-feedback-section').hasClass("hidden"))	{$(".js-next-question").trigger("click");
-															 $(".js-final-button")}
-		if (!$('.js-final-section').hasClass("hidden")) 	{$(".button").trigger("click");}
+			if (key == 97 || key == 65) resolveAnswer($('#answer-a').val());
+			if (key == 98 || key == 66) resolveAnswer($('#answer-b').val());
+			if (key == 99 || key == 67) resolveAnswer($('#answer-c').val());
+			if (key == 100 || key == 68) resolveAnswer($('#answer-d').val());			}
+		else if (!$('.js-start-section').hasClass("hidden")) 	quizStart();
+		else if (!$('.js-feedback-section').hasClass("hidden"))	resolveFeedbackButton();
+		else if (!$('.js-final-section').hasClass("hidden")) 	reInitialize();
 		})
 	}
 
 function generateQuestions() {
-	shuffle(MasterQuizList);
-	quizList = MasterQuizList.slice(0,quizLength);
+	// shuffle(MasterQuizList);
+	quizList = shuffle(MasterQuizList).slice(0,quizLength);
 }
 
 function shuffleAnswers() {
-	quizList.forEach((val) => shuffle(val.Answers));
+	quizList.forEach((val) => val.Answers = shuffle(val.Answers));
 }
 
 function reInitialize() {
@@ -237,8 +233,7 @@ function initialize() {
 	generateQuestions();
 	shuffleAnswers();
 	handleTheClicks();
-// not doing what i want just yet. will be a future upgrade. fuction launched by click depends on $.this
-// 	handleTheKeys();
+	handleTheKeys();
 }
 
 initialize();
