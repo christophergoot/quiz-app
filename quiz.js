@@ -36,7 +36,6 @@ function shuffle(arr) {
     let randArr = [];
     let newArr = [];
     let currentHigh = 0;
-    let currentHighIndex = 0;
     arr.forEach(val => randArr.push(Math.random()));
     for (let i=0; i<arr.length; i++) {
         for (let i = 0; i < arr.length; i++) if (randArr[i] > randArr[currentHigh]) currentHigh = i;
@@ -112,7 +111,6 @@ function visualizeAnswerStatus(answerStatus) {
 		$('.js-feedback-section').addClass('correct');  
 	}
 	if (answerStatus === 0) {	
-		console.log('wrong answer');
 		$('.js-feedback-section').removeClass('correct');
 		$('.js-feedback-section').addClass('incorrect'); 
 	}
@@ -124,7 +122,6 @@ function renderFeedback(answerStatus) {
 }
 
 function critiqueScore(score) {
-	console.log(score);
 	let string = "a Terrible";
 	if (score >= 100) string = "an Absolutely Perfect";
 	else if (score >= 80) string = "a Rather Impressive";
@@ -167,8 +164,6 @@ function resolveAnswer(answer) {
 
 function resolveFeedbackButton() {
 	event.preventDefault();
-	// console.log(`buttonValue is ${buttonValue}`);
-	console.log(($('.js-feedback-button')).val());
 	let buttonValue = $('.js-feedback-button').val();
 	if (buttonValue === "next") {
 		currentQuestionNumber++;
@@ -210,7 +205,6 @@ function handleTheKeys() {
 	}
 
 function generateQuestions() {
-	// shuffle(MasterQuizList);
 	quizList = shuffle(MasterQuizList).slice(0,quizLength);
 }
 
