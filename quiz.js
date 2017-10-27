@@ -33,16 +33,15 @@ function add(a, b) {
 }
 
 function shuffle(arr) {
-    let randArr = [];
     let newArr = [];
     let currentHigh = 0;
-    arr.forEach(val => randArr.push(Math.random()));
-    for (let i=0; i<arr.length; i++) {
-        for (let i = 0; i < arr.length; i++) if (randArr[i] > randArr[currentHigh]) currentHigh = i;
+    randArr = arr.map(() => Math.random());
+    arr.forEach(() => {
+        currentHigh = randArr.indexOf(Math.max(...randArr));
         newArr.push(arr[currentHigh]);
         randArr[currentHigh] = 0;
         currentHigh = 0;
-    }
+    });
     return(newArr);
 }
 
