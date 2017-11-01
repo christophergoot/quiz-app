@@ -35,7 +35,7 @@ function add(a, b) {
 function shuffle(arr) {
     let newArr = [];
     let currentHigh = 0;
-    randArr = arr.map(() => Math.random());
+    let randArr = arr.map(() => Math.random());
     arr.forEach(() => {
         currentHigh = randArr.indexOf(Math.max(...randArr));
         newArr.push(arr[currentHigh]);
